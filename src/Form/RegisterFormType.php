@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegisterFormType extends AbstractType
 {
@@ -19,18 +21,48 @@ class RegisterFormType extends AbstractType
         $builder
             ->add('firstName', TextType::class, [
                 'label' => 'Votre prénom',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'S\'il vous plaît, indiquez votre prénom',
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'minMessage' => 'Votre prénom doit faire au minimum {{ limit }} caractères',
+                        'max' => 30,
+                    ]),
+                ],
                 'attr' => [
                     'placeholder' => 'Veuillez saisir votre prénom'
                 ]
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Votre nom',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'S\'il vous plaît, indiquez votre nom',
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'minMessage' => 'Votre nom doit faire au minimum {{ limit }} caractères',
+                        'max' => 30,
+                    ]),
+                ],
                 'attr' => [
                     'placeholder' => 'Veuillez saisir votre nom'
                 ]
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Votre adresse email',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'S\'il vous plaît, indiquez votre email',
+                    ]),
+                    new Length([
+                        'min' => 2,
+                        'minMessage' => 'Votre email doit faire au minimum {{ limit }} caractères',
+                        'max' => 60,
+                    ]),
+                ],
                 'attr' => [
                     'placeholder' => 'Veuillez saisir votre adresse email'
                 ]
@@ -42,9 +74,6 @@ class RegisterFormType extends AbstractType
                 'required' => true,
                 'first_options' => ['label' => 'Veuillez saisir votre mot de passage'],
                 'second_options' => ['label' => 'Veuillez confirmer votre mot de passage'],
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'S\'inscrire'
             ]);
     }
 
