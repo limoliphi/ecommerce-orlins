@@ -20,7 +20,7 @@ class RegisterFormType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class, [
-                'label' => 'Votre prénom',
+                'label' => 'Prénom',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'S\'il vous plaît, indiquez votre prénom',
@@ -36,7 +36,7 @@ class RegisterFormType extends AbstractType
                 ]
             ])
             ->add('lastName', TextType::class, [
-                'label' => 'Votre nom',
+                'label' => 'Nom',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'S\'il vous plaît, indiquez votre nom',
@@ -52,7 +52,7 @@ class RegisterFormType extends AbstractType
                 ]
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Votre adresse email',
+                'label' => 'Adresse email',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'S\'il vous plaît, indiquez votre email',
@@ -64,16 +64,24 @@ class RegisterFormType extends AbstractType
                     ]),
                 ],
                 'attr' => [
-                    'placeholder' => 'Veuillez saisir votre adresse email'
+                    'placeholder' => 'Veuillez saisir votre email'
                 ]
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Attention, le mot de passage et la confirmation doivent être identiques',
-                'label' => 'Confirmez votre mot de passe',
+                'label' => 'Votre mot de passe',
                 'required' => true,
-                'first_options' => ['label' => 'Veuillez saisir votre mot de passage'],
-                'second_options' => ['label' => 'Veuillez confirmer votre mot de passage'],
+                'first_options' => ['label' => 'Mot de passe',
+                    'attr' => [
+                        'placeholder' => 'Merci de  saisir votre mot de passe'
+                    ]
+                ],
+                'second_options' => ['label' => 'Veuillez confirmer votre mot de passage',
+                    'attr' => [
+                        'placeholder' => 'Merci de confirmer  votre mot de passe'
+                    ]
+                ],
             ]);
     }
 
