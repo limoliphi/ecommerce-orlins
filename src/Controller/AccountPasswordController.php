@@ -15,7 +15,7 @@ class AccountPasswordController extends AbstractController
     /**
      * @Route("/compte/modifier-mon-mot-de-passe", name="account_password")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $em): Response
+    public function changePassword(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $em): Response
     {
         $notification = null;
 
