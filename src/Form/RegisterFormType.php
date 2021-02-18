@@ -74,12 +74,12 @@ class RegisterFormType extends AbstractType
                 'required' => true,
                 'first_options' => ['label' => 'Mot de passe',
                     'attr' => [
-                        'placeholder' => 'Merci de  saisir votre mot de passe'
+                        'placeholder' => 'Merci de saisir votre mot de passe'
                     ]
                 ],
                 'second_options' => ['label' => 'Veuillez confirmer votre mot de passage',
                     'attr' => [
-                        'placeholder' => 'Merci de confirmer  votre mot de passe'
+                        'placeholder' => 'Merci de confirmer votre mot de passe'
                     ]
                 ],
             ]);
