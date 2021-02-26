@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Classe\SearchProduct;
+use App\Form\SearchProductFormType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,8 +19,13 @@ class ProductController extends AbstractController
     {
         $products = $productRepository->findAll();
 
+        $searchProduct = new SearchProduct;
+
+        $form = $this->createForm(SearchProductFormType::class, $searchProduct);
+
         return $this->render('product/index.html.twig', [
-            'products' => $products
+            'products' => $products,
+            'form' => $form->createView()
         ]);
     }
 

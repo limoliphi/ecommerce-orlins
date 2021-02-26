@@ -10,7 +10,7 @@ class SearchProduct
     /**
      * @var string
      */
-    //nom du produit recherché
+    //recherche texte de mes utilisateurs
     public $productName = '';
 
     /**
