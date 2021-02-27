@@ -7,6 +7,7 @@ use App\Form\SearchProductFormType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,13 +16,19 @@ class ProductController extends AbstractController
     /**
      * @Route("/nos-produits", name="product_index")
      */
-    public function index(ProductRepository $productRepository, EntityManagerInterface $em): Response
+    public function index(ProductRepository $productRepository, Request $request): Response
     {
-        $products = $productRepository->findAll();
-
         $searchProduct = new SearchProduct;
 
         $form = $this->createForm(SearchProductFormType::class, $searchProduct);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $products = $productRepository->findBySearchProduct($searchProduct);
+        } else {
+            $products = $productRepository->findAll();
+        }
 
         return $this->render('product/index.html.twig', [
             'products' => $products,
