@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Classe\SearchProduct;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,32 +20,28 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-    // /**
-    //  * @return Product[] Returns an array of Product objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Requête qui permet de trouver un produit selon recherche de l'utilisateur
+     * @return Product []
+     */
+    public function findBySearchProduct(SearchProduct $searchProduct)
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $query = $this->createQueryBuilder('p')
+            ->select('p', 'c')
+            ->join('p.category', 'c');
 
-    /*
-    public function findOneBySomeField($value): ?Product
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if (!empty($searchProduct->productCategories)) {
+            $query = $query
+                ->andWhere('c.id IN (:categories)')
+                ->setParameter('categories', $searchProduct->productCategories);
+        }
+
+        if (!empty($searchProduct->productName)) {
+            $query = $query
+                ->andWhere('p.name LIKE :productName')
+                ->setParameter('productName', "%{$searchProduct->productName}%");
+        }
+
+        return $query->getQuery()->getResult();
     }
-    */
 }
