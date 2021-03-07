@@ -42,7 +42,8 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('product_index') }}">Nos produits <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="{{ path('product_index') }}">Nos produits <span
+                                class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Qui sommes-nous ? <span class="sr-only">(current)</span></a>
@@ -59,7 +60,9 @@
                     <a href="{{ path('app_login') }}">Connexion</a> | <a href="{{ path('register') }}">Inscription</a>
                 {% endif %}
             </div>
-
+            <a href="{{ path('cart_index') }}">
+                <img src="{{ asset('assets/img/shopping-cart.png') }}" class="cart-icon" alt="Mon panier">
+            </a>
         </div>
     </nav>
 </header>
