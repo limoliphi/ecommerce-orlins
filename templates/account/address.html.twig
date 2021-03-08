@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes adresses | La Boutique d'Orlins{% endblock %}
+
+{% block content %}
+    <a href="" class="btn btn-info btn-sm float-right">Ajouter une adresse</a>
+    <h1>Mes adresses</h1>
+    <p>
+        C'est dans cet espace que vous allez pouvoir gérer toutes vos adresses.
+    </p>
+    <hr>
+    <p>
+        <a href="{{ path('account') }}">Retour</a>
+    </p>
+    <hr>
+    {% if app.user.addresses|length == 0 %}
+        <p class="text-muted text-center mt-5">Vous n'avez pas encore saisi d'adresse dans votre compte client. Pour y
+            remédier<a href=""> cliquez ici</a>.
+        </p>
+    {% endif %}
+{% endblock %}
