@@ -23,17 +23,8 @@ class CartController extends AbstractController
      */
     public function index(Cart $cart): Response
     {
-        $cartComplete = [];
-
-        foreach ($cart->getCart() as $id => $quantity) {
-            $cartComplete[] = [
-                'product' => $this->entityManager->getRepository(Product::class)->findOneById($id),
-                'quantity' => $quantity
-            ];
-        }
-
         return $this->render('cart/index.html.twig', [
-            'cart' => $cartComplete
+            'cart' => $cart->getFullCart()
         ]);
     }
 
@@ -52,8 +43,29 @@ class CartController extends AbstractController
      */
     public function removeCart(Cart $cart): Response
     {
-        $cart->removeProductToCart();
+        $cart->removeProductsToCart();
 
         return $this->redirectToRoute('product_index');
+    }
+
+    /**
+     * @Route("/cart/delete/{id}", name="delete_to_cart")
+     */
+    public function deleteOneProductToCart(Cart $cart, $id): Response
+    {
+        $cart->deleteOneProductToCart($id);
+
+        return $this->redirectToRoute('cart_index');
+    }
+
+    /**
+     * @Route ("/cart/decrease/{id}", name="decrease_to_cart")
+     */
+    public function decreaseCart(Cart $cart, $id)
+    {
+        $cart->decreaseCart($id);
+
+        return $this->redirectToRoute('cart_index');
+
     }
 }
