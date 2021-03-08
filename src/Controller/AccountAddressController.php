@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Address;
 use App\Form\AddressFormType;
+use App\Repository\AddressRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,7 +49,34 @@ class AccountAddressController extends AbstractController
             return $this->redirectToRoute('account_address');
         }
 
-        return $this->render('account/add_address.html.twig', [
+        return $this->render('account/address_form.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/compte/ajouter-une-adresse{id}", name="edit_account_address")
+     */
+    public function editAddress(Request $request, $id, AddressRepository $addressRepository): Response
+    {
+        $address = $addressRepository->findOneById($id);
+
+        if (!$address || $address->getUser() != $this->getUser()) {
+            return $this->redirectToRoute('account_address');
+        }
+
+        $form = $this->createForm(AddressFormType::class, $address);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('account_address');
+        }
+
+        return $this->render('account/address_form.html.twig', [
             'form' => $form->createView()
         ]);
     }
