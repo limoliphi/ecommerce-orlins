@@ -20,7 +20,7 @@ class OrderFormType extends AbstractType
 
         $builder
             ->add('addresses', EntityType::class, [
-                'label' => 'Choisissez votre adresse de livraison',
+                'label' => false,
                 'required' => true,
                 'class' => Address::class,
                 'choices' => $user->getAddresses(),
@@ -39,8 +39,7 @@ class OrderFormType extends AbstractType
                 'attr' => [
                     'class' => 'btn btn-success btn-block'
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
