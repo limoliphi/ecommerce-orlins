@@ -8,7 +8,11 @@
     <hr>
     <div class="row">
         <div class="col-md-6">
-            <b>Choisir mon adresse de livraison</b><br>
+            {# me permet de récupérer les données de l'adresse et de les afficher grâce à public function __toString dans l'entité Address #}
+            {% set formHtml %}
+                {{ form(form) }}
+            {% endset %}
+            {{ formHtml|replace({'[br]' : '<br/>'})|raw }}
             <b>Choisir mon transporteur</b>
         </div>
         <div class="col-md-6">
