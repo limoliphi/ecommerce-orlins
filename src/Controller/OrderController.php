@@ -94,7 +94,7 @@ class OrderController extends AbstractController
                 $this->entityManager->persist($orderDetails);
             }
 
-            $this->entityManager->flush();
+            //$this->entityManager->flush();
 
             return $this->render('order/add_command.html.twig', [
                 'cart' => $cart->getFullCart(),
