@@ -69,7 +69,7 @@ class StripeController extends AbstractController
             'cancel_url' => $YOUR_DOMAIN . '/commande/erreur/CHECKOUT_SESSION_ID',
         ]);
 
-        $order->setStripeSEssionId($checkout_session->id);
+        $order->setStripeSessionId($checkout_session->id);
 
         $response = new JsonResponse(['id' => $checkout_session->id]);
 
