@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class OrderSuccessController extends AbstractController
+class OrderCancelController extends AbstractController
 {
     private $entityManager;
 
@@ -18,7 +18,7 @@ class OrderSuccessController extends AbstractController
     }
 
     /**
-     * @Route("/commande/merci/{stripeSessionId}", name="order_success")
+     * @Route("/commande/erreur/{stripeSessionId}", name="order_cancel")
      */
     public function index($stripeSessionId): Response
     {
@@ -29,16 +29,10 @@ class OrderSuccessController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        //modifier le statut isPaid de la commande
-        if (!$order->getIsPaid()) {
-            $order->setIsPaid(1);
-            $this->entityManager->flush();
+        //envoyer un email au client pour lui indiquer l'échec du paiement de sa commande
 
-            //envoyer un email au client pour lui confirmer le paiement de sa commande
-        }
-
-        return $this->render('order_success/index.html.twig', [
-            'order' => $order
+        return $this->render('order_cancel/index.html.twig', [
+            'order' =>$order
         ]);
     }
 }
