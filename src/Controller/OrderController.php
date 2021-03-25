@@ -73,6 +73,9 @@ class OrderController extends AbstractController
             $delivery_content .= '<br/>' . $delivery->getCountry();
 
             $order = new Order();
+            //passe le champ reference d'Order pour passer le detail de la commande dans Stripe
+            $reference = $date->format('dmY').'-'.uniqid();
+            $order->setReference($reference);
             $order->setUser($this->getUser());
             $order->setCreatedAt($date);
             $order->setCarrierName($carriers->getName());
@@ -94,12 +97,13 @@ class OrderController extends AbstractController
                 $this->entityManager->persist($orderDetails);
             }
 
-            //$this->entityManager->flush();
+            $this->entityManager->flush();
 
             return $this->render('order/add_command.html.twig', [
                 'cart' => $cart->getFullCart(),
                 'carrier' => $carriers,
-                'delivery' => $delivery_content
+                'delivery' => $delivery_content,
+                'reference' => $order->getReference()
             ]);
         }
 
