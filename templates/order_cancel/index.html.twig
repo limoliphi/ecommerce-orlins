@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Echec du paiement de votre commande | La Boutique d'Orlins{% endblock %}
+
+{% block content %}
+    <h1>Echec du paiement de la commande</h1>
+    <p>
+        Bonjour <strong>{{ order.user.firstname }} {{ order.user.lastname }}</strong>, <br/><br>
+        Il semble que votre paiement a échoué pour votre commande n°<strong>{{ order.reference }}</strong>.<br/>
+        Une confirmation d'erreur vient de vous être envoyée par email à l'adresse <strong>{{ order.user.email }}</strong>.
+    </p>
+    <a href="{{ path('order') }}" class="btn btn-success">Pour réessayer le paiement</a>.
+{% endblock %}
