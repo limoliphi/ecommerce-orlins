@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Classe\Cart;
+use App\Classe\Mail;
 use App\Entity\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,6 +39,9 @@ class OrderSuccessController extends AbstractController
             $this->entityManager->flush();
 
             //envoyer un email au client pour lui confirmer le paiement de sa commande
+            $mail = new Mail();
+            $content = "Bonjour " . $order->getUser()->getFirstName() . "<br/>Merci pour votre commande sur la première boutique du tout fabriqué à Orlins<br><br/>";
+            $mail->send($order->getUser()->getEmail(), $order->getUser()->getFirstName(), 'Votre commande La Boutique d\'Orlins est bien validée', $content);
         }
 
         return $this->render('order_success/index.html.twig', [

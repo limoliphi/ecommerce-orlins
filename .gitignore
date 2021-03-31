@@ -19,3 +19,7 @@
 ###> custom app ignores ###
 /public/uploads/
 ###< end custom app ignores ###
+
+###> custom app Mail ignores ###
+/Classe/Mail/
+###< end custom app Mail ignores ###
