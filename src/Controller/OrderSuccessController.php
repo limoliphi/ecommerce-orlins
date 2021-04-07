@@ -32,10 +32,10 @@ class OrderSuccessController extends AbstractController
         }
 
         //modifier le statut isPaid de la commande
-        if (!$order->getIsPaid()) {
+        if ($order->getState() == 0) {
             //on vide le panier de l'utilisateur
             $cart = $cart->removeProductsToCart();
-            $order->setIsPaid(1);
+            $order->setState(1);
             $this->entityManager->flush();
 
             //envoyer un email au client pour lui confirmer le paiement de sa commande
