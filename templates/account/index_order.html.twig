@@ -20,6 +20,7 @@
             <thead>
             <tr>
                 <th scope="col">Référence</th>
+                <th scope="col">Statut</th>
                 <th scope="col">Passée le</th>
                 <th scope="col">Produit(s)</th>
                 <th scope="col">Total</th>
@@ -30,6 +31,15 @@
             {% for order in orders %}
                 <tr>
                     <td><span class="badge badge-secondary">{{ order.reference }}</span></td>
+                    <td>
+                        {% if order.state == 1 %}
+                            <p>Paiement accepté</p>
+                        {% elseif order.state == 2 %}
+                            <p>Préparation en cours</p>
+                        {% elseif order.state == 3 %}
+                            <p>Livraison en cours</p>
+                        {% endif %}
+                    </td>
                     <td>{{ order.createdAt|date('d/m/Y') }}</td>
                     <td class="text-center">{{ order.orderDetails|length }}</td>
                     <td>{{ ((order.carrierPrice + order.getTotal) / 100)|number_format('2', ',', ',') }} €</td>
