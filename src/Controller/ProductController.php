@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Classe\SearchProduct;
+use App\Entity\Product;
 use App\Form\SearchProductFormType;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -42,13 +43,15 @@ class ProductController extends AbstractController
     public function show($slug, ProductRepository $productRepository, EntityManagerInterface $em): Response
     {
         $product = $productRepository->findOneBySlug($slug);
+        $products = $productRepository->findByIsBest(1);
 
         if (!$product) {
             return $this->redirectToRoute('product_index');
         }
 
         return $this->render('product/show.html.twig', [
-            'product' => $product
+            'product' => $product,
+            'products' => $products
         ]);
     }
 }
