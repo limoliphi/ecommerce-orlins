@@ -10,6 +10,11 @@
     <p>
         C'est dans cet espace que vous allez pouvoir gérer toutes vos informations personnelles.
     </p>
+    {% if is_granted ('ROLE_ADMIN') %}
+    <p>
+        <a href="/admin">Vous êtes un administrateur, accédez au backoffice</a>
+    </p>
+    {% endif %}
     <p>
         <a href="{{ path('account_password') }}">Modifier mon mot de passe</a>
     </p>
